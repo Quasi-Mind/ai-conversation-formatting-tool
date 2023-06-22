@@ -9,63 +9,133 @@
 
 .container {
   max-width: 768px;
-  padding:8px;
+  padding: 8px;
   margin: 0 auto;
 }
+
 form {
   background: #eee;
   border: 1px solid #999;
   border-radius: .25em;
-  box-shadow: 0 2px 2px rgba(#111,0.5);
+  box-shadow: 0 2px 2px rgba(#111, 0.5);
   display: flex;
   padding: 10px;
   display: flex;
   flex-direction: column;
+
   .warn-text {
     color: crimson;
     font-weight: bold;
     font-size: .75rem;
   }
-  & > * {
-    margin: .25rem; 
+
+  &>* {
+    margin: .25rem;
   }
 
   label {
     margin-top: 1em;
-    
+
   }
-  input, textarea, select {
+
+  input,
+  textarea,
+  select {
     padding: .25em;
     @include input-styles;
   }
+
   textarea {
     resize: vertical;
   }
-  .col {
-    padding: .5rem;
-    &:nth-of-type(odd) {
-      background-color: #ccc;
+
+  .conversation-container {
+    display: flex;
+    flex-direction: column;
+    
+    .add-pair {
+      padding: .5em;
+      margin: 0 auto;
+    }
+
+    .conversation-pair {
+      display: flex;
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 1rem;
+      padding-bottom: .25rem;
+      border-radius: .125rem;
+
+      .remove-pair {
+        margin: .25em;
+      }
+
+      .row {
+        width: 100%;
+
+        .col {
+          display: flex;
+          // align-items: center;
+          padding: .5rem;
+
+          &:nth-of-type(odd) {
+            background-color: #ccc;
+          }
+
+          textarea {
+            width: 100%;
+          }
+
+          label.user,
+          label.model {
+            display: inline-flex;
+            margin: .25em 1em .25em 0;
+            height: 3em;
+            width: 3em;
+            border-radius: .5em;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border: 1px solid #fff;
+          }
+
+          label.user {
+            background-color: #ddd;
+          }
+
+          label.model {
+            background-color: #00A67E;
+            color: white;
+
+          }
+        }
+      }
+    }
+
+  }
+
+  .params {
+
+    label {
+      display: block;
+      margin-right: .5em;
+      margin-top: .5em;
+    }
+    span.warn-text {
+      display: block;
+      margin: .5em;
+    }
+    button {
+      margin-left: .5em;
     }
   }
-  label.user, label.model {
-    display: inline-flex;
-    margin: 0 1em 0 0;
-    height: 3em;
-    width: 3em;
-    border-radius: .5em;
-    justify-content: center;
-    align-items: center;
+
+  #submit {
+    padding: .5em;
+  }
+  .hint {
+    font-size: .8rem;
     font-weight: bold;
-    border: 1px solid #fff;
+    color: #333;
 
   }
-
-  label.user {
-    background-color: #ddd;
-  }
-  label.model {
-    background-color: #00A67E;
-    color: white;
-
-  }
-} 
+}

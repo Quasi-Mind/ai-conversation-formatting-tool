@@ -33,7 +33,7 @@ const App = () => {
   const mdTempalte = formData => {
     const dateString = formData.conversationDate.toISOString().split('T')[0];
     
-    const fileName = `${dateString.replaceAll('-','')}-${formData.dumVersion}-${formData.conversationModel}.md`
+    const fileName = `${dateString.replaceAll('-','')}-${formData.dumVersion}-${formData.conversationModel}-${encodeURI(formData.conversationTitle)}.md`
 
     let chatPairsMarkdown = '';
     formData.chatPairs.forEach((pair, index) => {

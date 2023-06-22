@@ -36,7 +36,7 @@ const App = () => {
     }
     const dateString = formData.conversationDate.toISOString().split('T')[0];
     
-    const fileName = `${dateString.replaceAll('-','')}-${formData.dumVersion}-${formData.conversationModel}-${sanitizeTitle(formData.conversationTitle)}.md`
+    const fileName = `${dateString.replaceAll('-','')}-v${formData.dumVersion}-${formData.conversationModel}-${sanitizeTitle(formData.conversationTitle)}.md`
 
     let chatPairsMarkdown = '';
     formData.chatPairs.forEach((pair, index) => {
@@ -112,7 +112,7 @@ ${chatPairsMarkdown}
 
   const formatterVersion = "0.1.0"
   const dumVersions = [
-    "v1.0.0"
+    "1.0.0"
   ]
 
   const models = [
@@ -284,7 +284,7 @@ ${chatPairsMarkdown}
               id="dumVersion"
               name="dumVersion"
             >
-              {dumVersions.map((version, i) => <option key={i} value={version.toLowerCase()}>{version}</option>)}
+              {dumVersions.map((version, i) => <option key={i} value={version.toLowerCase()}>v{version}</option>)}
             </Field>
             {warn(errors, touched, 'dumVersion')}
 

@@ -34,9 +34,21 @@ const App = () => {
     const sanitizeTitle = (input) => {
       return input.replace(/[^a-z0-9]/gi, '-').toLowerCase();
     }
+    function sanitizeDescription(input) {
+      // Replace markdown specific characters and line breaks
+      const step1 = input.replace(/(\||#|\*|_|-|\+|>|!|`|\n)/g, '\\$1');
+
+      // Enclose in double quotes and escape any pre-existing unescaped double quotes
+      const sanitizedInput = `"${step1.replace(/(?<!\\)"/g, '\\"')}"`;
+
+      return sanitizedInput;
+    }
+
+    formData.conversationDescription = sanitizeDescription(formData.conversationDescription)
+
     const dateString = formData.conversationDate.toISOString().split('T')[0];
-    
-    const fileName = `${dateString.replaceAll('-','')}-v${formData.dumVersion}-${formData.conversationModel}-${sanitizeTitle(formData.conversationTitle)}.md`
+
+    const fileName = `${dateString.replaceAll('-', '')}-v${formData.dumVersion}-${formData.conversationModel}-${sanitizeTitle(formData.conversationTitle)}.md`
 
     let chatPairsMarkdown = '';
     formData.chatPairs.forEach((pair, index) => {
@@ -105,7 +117,7 @@ ${JSON.stringify(formData)}
 ${chatPairsMarkdown}
 
 `
-    return [template,fileName]
+    return [template, fileName]
   }
 
 
@@ -263,7 +275,6 @@ ${chatPairsMarkdown}
               id="conversationDescription"
               name="conversationDescription"
               placeholder="Brief summary of the conversation (max 500 characters)"
-              component="textarea"
             />
             {warn(errors, touched, 'conversationDescription')}
 

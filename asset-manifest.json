@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ai-conversation-formatting-tool/static/css/main.6c624793.css",
-    "main.js": "/ai-conversation-formatting-tool/static/js/main.e3f727b9.js",
+    "main.js": "/ai-conversation-formatting-tool/static/js/main.3f254334.js",
     "static/js/787.9e4b75d8.chunk.js": "/ai-conversation-formatting-tool/static/js/787.9e4b75d8.chunk.js",
     "index.html": "/ai-conversation-formatting-tool/index.html",
     "main.6c624793.css.map": "/ai-conversation-formatting-tool/static/css/main.6c624793.css.map",
-    "main.e3f727b9.js.map": "/ai-conversation-formatting-tool/static/js/main.e3f727b9.js.map",
+    "main.3f254334.js.map": "/ai-conversation-formatting-tool/static/js/main.3f254334.js.map",
     "787.9e4b75d8.chunk.js.map": "/ai-conversation-formatting-tool/static/js/787.9e4b75d8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6c624793.css",
-    "static/js/main.e3f727b9.js"
+    "static/js/main.3f254334.js"
   ]
 }

@@ -258,8 +258,8 @@ ${chatPairsMarkdown}
           console.log(values)
           console.log(...mdTempalte(values))
           downloadMarkdown(...mdTempalte(values))
-          await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(values, null, 2));
+          // await new Promise((r) => setTimeout(r, 500));
+          // alert(JSON.stringify(values, null, 2));
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (

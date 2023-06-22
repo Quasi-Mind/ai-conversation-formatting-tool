@@ -86,6 +86,9 @@ link: ${formData.conversationLink}
 
 ## Details
 
+<details>
+<summary>Click to expand</summary>
+
 | Detail | Value |
 | --- | --- |
 | Formatter Version | ${formData.formatterVersion} |
@@ -98,8 +101,15 @@ link: ${formData.conversationLink}
 | Model | ${formData.conversationModel} |
 | Link | ${formData.conversationLink || "None provided" } |
 
+</details>
+
 ## Parameters (if applicable)
+<details>
+<summary>Click to expand</summary>
+
 ${parametersTable}
+
+</details>
 
 ## json
 <details>

@@ -32,7 +32,7 @@ const App = () => {
 
   const mdTempalte = formData => {
     const sanitizeTitle = (input) => {
-      return input.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      return input.replace(/[^a-z0-9]/gi, '-').toLowerCase();
     }
     const dateString = formData.conversationDate.toISOString().split('T')[0];
     

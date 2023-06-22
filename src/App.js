@@ -140,6 +140,8 @@ ${chatPairsMarkdown}
   const models = [
     "chatgpt-4",
     "chatgpt-3.5-turbo",
+    "bing-gpt-4",
+    "bard-palm-2",
     "gpt-4",
     "gpt-4-0613",
     "gpt-4-32k",

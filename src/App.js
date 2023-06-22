@@ -49,8 +49,7 @@ const App = () => {
 | Frequency Penalty | ${formData.frequencyPenalty} |
 | Presence Penalty | ${formData.presencePenalty} |
   `
-    const template = `
----
+    const template = `---
 formatter_version: ${formData.formatterVersion}
 title: ${formData.conversationTitle}
 short_description: ${formData.conversationDescription}

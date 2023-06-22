@@ -5,7 +5,6 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import * as Yup from 'yup';
 
-
 const App = () => {
 
   function downloadMarkdown(markdown, filename) {
@@ -34,6 +33,7 @@ const App = () => {
     const sanitizeTitle = (input) => {
       return input.replace(/[^a-z0-9]/gi, '-').toLowerCase();
     }
+
     function sanitizeDescription(input) {
       // Replace markdown specific characters and line breaks
       const step1 = input.replace(/(\||#|\*|_|-|\+|>|!|`|\n)/g, '\\$1');
@@ -45,7 +45,6 @@ const App = () => {
     }
 
     const description = sanitizeDescription(formData.conversationDescription)
-    
 
     const dateString = formData.conversationDate.toISOString().split('T')[0];
 
@@ -109,6 +108,7 @@ ${parametersTable}
 \`\`\`json
 ${JSON.stringify(formData)}
 \`\`\`
+
 </details>
 
 ---
@@ -120,8 +120,6 @@ ${chatPairsMarkdown}
 `
     return [template, fileName]
   }
-
-
 
   const formatterVersion = "0.1.0"
   const dumVersions = [
@@ -224,11 +222,13 @@ ${chatPairsMarkdown}
       .min(1, 'Minimum of one pair'),
 
   });
+
   const warn = (errors, touched, fieldName) => {
     return (
       errors[fieldName] && touched[fieldName] && <span className='warn-text'>{errors[fieldName]}</span>
     )
   }
+
   return (
     <div className='container'>
       <h1>Conversation Formatter v0.1.0</h1>
@@ -258,8 +258,8 @@ ${chatPairsMarkdown}
           console.log(values)
           console.log(...mdTempalte(values))
           downloadMarkdown(...mdTempalte(values))
-          // await new Promise((r) => setTimeout(r, 500));
-          // alert(JSON.stringify(values, null, 2));
+          await new Promise((r) => setTimeout(r, 500));
+          alert(JSON.stringify(values, null, 2));
         }}
       >
         {({ errors, touched, values, setFieldValue }) => (
@@ -285,10 +285,9 @@ ${chatPairsMarkdown}
               id='conversationDate'
               name='conversationDate'
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => setFieldValue('conversationDate',date)}
             />
             {warn(errors, touched, 'conversationDate')}
-
 
             <label htmlFor="dumVersion">Which DUM version did you use?<span className='warn-text'> *</span></label>
             <Field
@@ -361,7 +360,6 @@ ${chatPairsMarkdown}
                 </div>
               </>
             )}
-
 
             <label>
               <Field type="checkbox" id="terms" name="terms" /> I have checked that there is no personally identifying information in this conversation.<span className='warn-text'> *</span>

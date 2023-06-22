@@ -40,7 +40,7 @@ const App = () => {
 
     let chatPairsMarkdown = '';
     formData.chatPairs.forEach((pair, index) => {
-      chatPairsMarkdown += `\n\n#### Chat Pair ${index + 1}<a name="pair${index + 1}"></a>}\n🧑‍💻 **user:**\n\n${pair.user}\n\n🤖 **model:**\n\n${pair.model}\n`
+      chatPairsMarkdown += `\n\n#### Chat Pair ${index + 1}<a name="pair${index + 1}"></a>\n🧑‍💻 **user:**\n\n${pair.user}\n\n🤖 **model:**\n\n${pair.model}\n`
     });
 
     const parametersTable = `
@@ -82,7 +82,7 @@ link: ${formData.conversationLink}
 | DUM Version | ${formData.dumVersion} |
 | Modified Prompt | ${formData.isModified ? "Yes" : "No"} |
 | System Message | ${formData.systemMessage ? "Yes" : "No"} |
-| Model | ${formData.model} |
+| Model | ${formData.conversationModel} |
 | Link | ${formData.conversationLink} || "None provided" |
 
 ## Parameters

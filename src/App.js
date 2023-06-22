@@ -44,7 +44,8 @@ const App = () => {
       return sanitizedInput;
     }
 
-    formData.conversationDescription = sanitizeDescription(formData.conversationDescription)
+    const description = sanitizeDescription(formData.conversationDescription)
+    
 
     const dateString = formData.conversationDate.toISOString().split('T')[0];
 
@@ -67,7 +68,7 @@ const App = () => {
     const template = `---
 formatter_version: ${formData.formatterVersion}
 title: ${formData.conversationTitle}
-short_description: ${formData.conversationDescription}
+short_description: ${description}
 date: ${dateString}
 DUM_version: ${formData.dumVersion}
 modified_prompt: ${formData.isModified}
@@ -82,7 +83,7 @@ link: ${formData.conversationLink}
 ---    
 
 # Title: ${formData.conversationTitle}
-**description:** ${formData.conversationDescription}
+**description:** ${description}
 
 ## Details
 
@@ -96,7 +97,7 @@ link: ${formData.conversationLink}
 | Modified Prompt | ${formData.isModified ? "Yes" : "No"} |
 | System Message | ${formData.systemMessage ? "Yes" : "No"} |
 | Model | ${formData.conversationModel} |
-| Link | ${formData.conversationLink} || "None provided" |
+| Link | ${formData.conversationLink || "None provided" } |
 
 ## Parameters (if applicable)
 ${parametersTable}

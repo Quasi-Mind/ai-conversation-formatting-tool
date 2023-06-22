@@ -31,9 +31,12 @@ const App = () => {
   }
 
   const mdTempalte = formData => {
+    const sanitizeTitle = (input) => {
+      return input.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    }
     const dateString = formData.conversationDate.toISOString().split('T')[0];
     
-    const fileName = `${dateString.replaceAll('-','')}-${formData.dumVersion}-${formData.conversationModel}-${encodeURI(formData.conversationTitle)}.md`
+    const fileName = `${dateString.replaceAll('-','')}-${formData.dumVersion}-${formData.conversationModel}-${sanitizeTitle(formData.conversationTitle)}.md`
 
     let chatPairsMarkdown = '';
     formData.chatPairs.forEach((pair, index) => {

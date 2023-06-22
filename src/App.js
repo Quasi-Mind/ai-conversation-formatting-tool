@@ -76,6 +76,7 @@ link: ${formData.conversationLink}
 
 | Detail | Value |
 | --- | --- |
+| Formatter Version | ${formData.formatterVersion} |
 | Conversation Title | ${formData.conversationTitle} |
 | Short Description | ${formData.conversationDescription} |
 | Date | ${dateString} |
@@ -88,7 +89,7 @@ link: ${formData.conversationLink}
 ## Parameters (if applicable)
 ${parametersTable}
 
-## Raw json
+## json
 <details>
 <summary>Click to expand</summary>
 

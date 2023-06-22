@@ -85,7 +85,7 @@ link: ${formData.conversationLink}
 | Model | ${formData.conversationModel} |
 | Link | ${formData.conversationLink} || "None provided" |
 
-## Parameters
+## Parameters (if applicable)
 ${parametersTable}
 
 ## Raw json
@@ -358,7 +358,7 @@ ${chatPairsMarkdown}
 
             <hr />
             <h2>Add Conversation</h2>
-            <p>copy and past your inputs and the models outputs <span className='hint'> (please also include the initial prompt and response)</span></p>
+            <p>copy and paste your inputs and the models outputs <span className='hint'> (please also include the initial prompt and response)</span></p>
 
             <label>
               <Field type="checkbox" id="systemMessage" name="systemMessage" />

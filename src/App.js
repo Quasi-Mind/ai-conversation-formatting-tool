@@ -284,7 +284,7 @@ ${chatPairsMarkdown}
               component={DatePicker}
               id='conversationDate'
               name='conversationDate'
-              selected={startDate}
+              selected={values.conversationDate}
               onChange={(date) => setFieldValue('conversationDate',date)}
             />
             {warn(errors, touched, 'conversationDate')}

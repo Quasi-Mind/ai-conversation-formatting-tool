@@ -10,12 +10,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const App = () => {
 
-  const warn = (errors, touched, fieldName) => {
-    return (
-      errors[fieldName] && touched[fieldName] && <span className='warn-text'>{errors[fieldName]}</span>
-    )
-  }
-
   const initialValues = {
     formatterVersion: formatterVersion,
     conversationTitle: '',
@@ -51,11 +45,23 @@ const App = () => {
         {({ errors, touched, values, setFieldValue }) => (
           <Form>
             <label htmlFor="conversationLink">Link to Conversation</label>
-            <Field id="conversationLink" name="conversationLink" placeholder="Conversation chat link (if one exists)" />
+            <Field
+              id="conversationLink"
+              name="conversationLink"
+              placeholder="Conversation chat link (if one exists)"
+            />
 
             <label htmlFor="conversationTitle">Conversation Title<span className='warn-text'> *</span></label>
-            <Field id="conversationTitle" name="conversationTitle" placeholder="Enter a short descriptive title (max 120 characters)" />
-            {warn(errors, touched, 'conversationTitle')}
+            <Field
+              id="conversationTitle"
+              name="conversationTitle"
+              placeholder="Enter a short descriptive title (max 120 characters)"
+            />
+            <ErrorMessage
+              name="conversationTitle"
+              component="span"
+              className="warn-text"
+            />
 
             <label htmlFor="conversationDescription">Conversation Description<span className='warn-text'> *</span></label>
             <Field
@@ -63,7 +69,11 @@ const App = () => {
               name="conversationDescription"
               placeholder="Brief summary of the conversation (max 500 characters)"
             />
-            {warn(errors, touched, 'conversationDescription')}
+            <ErrorMessage
+              name="conversationDescription"
+              component="span"
+              className="warn-text"
+            />
 
             <label htmlFor='conversationDate'>Date of Conversation<span className='warn-text'> *</span></label>
             < Field
@@ -73,7 +83,11 @@ const App = () => {
               selected={values.conversationDate}
               onChange={(date) => setFieldValue('conversationDate', date)}
             />
-            {warn(errors, touched, 'conversationDate')}
+            <ErrorMessage
+              name="conversationDate"
+              component="span"
+              className="warn-text"
+            />
 
             <label htmlFor="dumVersion">Which DUM version did you use?<span className='warn-text'> *</span></label>
             <Field
@@ -83,7 +97,11 @@ const App = () => {
             >
               {dumVersions.map((version, i) => <option key={i} value={version.toLowerCase()}>v{version}</option>)}
             </Field>
-            {warn(errors, touched, 'dumVersion')}
+            <ErrorMessage
+              name="dumVersion"
+              component="span"
+              className="warn-text"
+            />
 
             <label>
               <Field type="checkbox" id="isModified" name="isModified" />
@@ -98,7 +116,11 @@ const App = () => {
             >
               {models.map((model, i) => <option key={i} value={model.toLowerCase()}>{model}</option>)}
             </Field>
-            {warn(errors, touched, 'conversationModel')}
+            <ErrorMessage
+              name="conversationModel"
+              component="span"
+              className="warn-text"
+            />
 
             <label>
               <Field type="checkbox" id="showParams" name="showParams" />
@@ -111,36 +133,85 @@ const App = () => {
                 <div className="params">
                   <label htmlFor="temperature">Temperature</label>
                   <div>
-                    <ErrorMessage name={`temperature`} component="span" className="warn-text" />
-                    <Field type="number" id="temperature" name="temperature" step="any" min="0" />
+                    <ErrorMessage
+                      name={`temperature`}
+                      component="span"
+                      className="warn-text"
+                    />
+                    <Field
+                      type="number"
+                      id="temperature"
+                      name="temperature"
+                      step="any"
+                      min="0"
+                    />
                     <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
                   </div>
 
                   <label htmlFor="maxTokens">Maximum tokens</label>
                   <div>
-                    <ErrorMessage name={`maxTokens`} component="span" className="warn-text" />
-                    <Field type="number" id="maxTokens" name="maxTokens" min="0" />
+                    <ErrorMessage
+                      name={`maxTokens`}
+                      component="span"
+                      className="warn-text"
+                    />
+                    <Field
+                      type="number"
+                      id="maxTokens"
+                      name="maxTokens"
+                      min="0"
+                    />
                     <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
                   </div>
 
                   <label htmlFor="topP">Top P</label>
                   <div>
-                    <ErrorMessage name={`topP`} component="span" className="warn-text" />
-                    <Field type="number" id="topP" name="topP" step="any" min="0" />
+                    <ErrorMessage
+                      name="topP"
+                      component="span"
+                      className="warn-text"
+                    />
+                    <Field
+                      type="number"
+                      id="topP"
+                      name="topP"
+                      step="any"
+                      min="0"
+                    />
                     <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
                   </div>
 
                   <label htmlFor="frequencyPenalty">Frequency penalty</label>
                   <div>
-                    <ErrorMessage name={`frequencyPenalty`} component="span" className="warn-text" />
-                    <Field type="number" id="frequencyPenalty" name="frequencyPenalty" step="any" min="0" />
+                    <ErrorMessage
+                      name="frequencyPenalty"
+                      component="span"
+                      className="warn-text"
+                    />
+                    <Field
+                      type="number"
+                      id="frequencyPenalty"
+                      name="frequencyPenalty"
+                      step="any"
+                      min="0"
+                    />
                     <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
                   </div>
 
                   <label htmlFor="presencePenalty">Presence penalty</label>
                   <div>
-                    <ErrorMessage name={`presencePenalty`} component="span" className="warn-text" />
-                    <Field type="number" id="presencePenalty" name="presencePenalty" step="any" min="0" />
+                    <ErrorMessage
+                      name="presencePenalty"
+                      component="span"
+                      className="warn-text"
+                    />
+                    <Field
+                      type="number"
+                      id="presencePenalty"
+                      name="presencePenalty"
+                      step="any"
+                      min="0"
+                    />
                     <button type="button" onClick={() => setFieldValue("temperature", null)}>Clear</button>
                   </div>
                 </div>
@@ -148,9 +219,18 @@ const App = () => {
             )}
 
             <label>
-              <Field type="checkbox" id="terms" name="terms" /> I have checked that there is no personally identifying information in this conversation.<span className='warn-text'> *</span>
+              <Field
+                type="checkbox"
+                id="terms"
+                name="terms"
+              />
+              I have checked that there is no personally identifying information in this conversation.<span className='warn-text'> *</span>
             </label>
-            {errors['terms'] && <span className='warn-text'>{errors['terms']}</span>}
+            <ErrorMessage
+              name="terms"
+              component="span"
+              className="warn-text"
+            />
             <button id="submit" type="submit">Download formatted markdown (.md) file</button>
 
             <hr />
@@ -158,11 +238,18 @@ const App = () => {
             <p>copy and paste your inputs and the models outputs <span className='hint'> (please also include the initial prompt and response)</span></p>
 
             <label>
-              <Field type="checkbox" id="systemMessage" name="systemMessage" />
+              <Field
+                type="checkbox"
+                id="systemMessage"
+                name="systemMessage"
+              />
               Did you use DUM as a system message? <span className='hint'> * leave unchecked if unsure</span>
             </label>
-
-            {!values.chatPairs[0] && errors.chatPairs && <span className='warn-text'>{errors.chatPairs}</span>}
+            <ErrorMessage
+              name="systemMessage"
+              component="span"
+              className="warn-text"
+            />
 
             <FieldArray name="chatPairs">
               {({ insert, remove, push }) => (

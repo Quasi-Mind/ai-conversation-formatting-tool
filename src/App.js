@@ -1,240 +1,14 @@
 import './App.scss'
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Field, Form, FieldArray, ErrorMessage } from 'formik';
+import { formatterVersion, dumVersions, models } from './config/constants';
 import DatePicker from "react-datepicker"
+import ConversationSchema from './config/conversationSchema';
+import markdownTempalte from './utils/markdownTemplate';
+import downloadMarkdown from './utils/downloadMarkdown';
 import "react-datepicker/dist/react-datepicker.css";
-import * as Yup from 'yup';
 
 const App = () => {
-
-  function downloadMarkdown(markdown, filename) {
-    // Create a Blob with the markdown
-    const blob = new Blob([markdown], { type: 'text/markdown' });
-
-    // Create a URL for the Blob
-    const url = URL.createObjectURL(blob);
-
-    // Create a temporary download link
-    const link = document.createElement('a');
-    link.download = filename; // specify the file name
-    link.href = url;
-
-    // Append the link to the body (this is necessary for Firefox)
-    document.body.appendChild(link);
-
-    // Simulate a click on the link
-    link.click();
-
-    // Remove the link from the body
-    document.body.removeChild(link);
-  }
-
-  const mdTempalte = formData => {
-    const sanitizeTitle = (input) => {
-      return input.replace(/[^a-z0-9]/gi, '-').toLowerCase();
-    }
-
-    function sanitizeDescription(input) {
-      // Replace markdown specific characters and line breaks
-      const step1 = input.replace(/(\||#|\*|_|-|\+|>|!|`|\n)/g, '\\$1');
-
-      // Enclose in double quotes and escape any pre-existing unescaped double quotes
-      const sanitizedInput = `"${step1.replace(/(?<!\\)"/g, '\\"')}"`;
-
-      return sanitizedInput;
-    }
-
-    const description = sanitizeDescription(formData.conversationDescription)
-
-    const dateString = formData.conversationDate.toISOString().split('T')[0];
-
-    const fileName = `${dateString.replaceAll('-', '')}-v${formData.dumVersion}-${formData.conversationModel}-${sanitizeTitle(formData.conversationTitle)}.md`
-
-    let chatPairsMarkdown = '';
-    formData.chatPairs.forEach((pair, index) => {
-      chatPairsMarkdown += `\n\n#### Chat Pair ${index + 1}<a name="pair${index + 1}"></a>\n🧑‍💻 **user:**\n\n${pair.user}\n\n🤖 **model:**\n\n${pair.model}\n`
-    });
-
-    const parametersTable = `
-| Parameter | Value |
-| --- | --- |
-| Max Tokens | ${formData.maxTokens} |
-| Temperature | ${formData.temperature} |
-| Top P | ${formData.topP} |
-| Frequency Penalty | ${formData.frequencyPenalty} |
-| Presence Penalty | ${formData.presencePenalty} |
-  `
-    const template = `---
-formatter_version: ${formData.formatterVersion}
-title: ${formData.conversationTitle}
-short_description: ${description}
-date: ${dateString}
-DUM_version: ${formData.dumVersion}
-modified_prompt: ${formData.isModified}
-model: ${formData.ConversationModel}
-parameters: 
-  max_tokens: ${formData.maxTokens ? formData.maxTokens : null}
-  temperature: ${formData.temperature ? formData.temperature : null}
-  top_p: ${formData.topP ? formData.topP : null}
-  frequency_penalty: ${formData.frequencyPenalty ? formData.frequencyPenalty : null}
-  presence_penalty: ${formData.presencePenalty ? formData.presencePenalty : null}
-link: ${formData.conversationLink}
----    
-
-# Title: ${formData.conversationTitle}
-**description:** ${description}
-
-## Details
-
-<details>
-<summary>Click to expand</summary>
-
-| Detail | Value |
-| --- | --- |
-| Formatter Version | ${formData.formatterVersion} |
-| Conversation Title | ${formData.conversationTitle} |
-| Short Description | ${formData.conversationDescription} |
-| Date | ${dateString} |
-| DUM Version | ${formData.dumVersion} |
-| Modified Prompt | ${formData.isModified ? "Yes" : "No"} |
-| System Message | ${formData.systemMessage ? "Yes" : "No"} |
-| Model | ${formData.conversationModel} |
-| Link | ${formData.conversationLink || "None provided" } |
-
-</details>
-
-## Parameters (if applicable)
-
-<details>
-<summary>Click to expand</summary>
-
-${parametersTable}
-
-</details>
-
-## json
-<details>
-<summary>Click to expand</summary>
-
-\`\`\`json
-${JSON.stringify(formData)}
-\`\`\`
-
-</details>
-
----
-
-## Conversation
-
-${chatPairsMarkdown}
-
-`
-    return [template, fileName]
-  }
-
-  const formatterVersion = "0.1.0"
-  const dumVersions = [
-    "1.0.0"
-  ]
-
-  const models = [
-    "chatgpt-4",
-    "chatgpt-3.5-turbo",
-    "bing-gpt-4",
-    "bard-palm-2",
-    "gpt-4",
-    "gpt-4-0613",
-    "gpt-4-32k",
-    "gpt-4-32k-0613",
-    "gpt-3.5-turbo",
-    "gpt-3.5-turbo-16k",
-    "gpt-3.5-turbo-0613",
-    "gpt-3.5-turbo-16k-0613",
-    "text-davinci-003",
-    "text-davinci-002",
-    "code-davinci-002",
-    "text-curie-001",
-    "text-babbage-001",
-    "text-ada-001",
-    "davinci",
-    "curie",
-    "babbage",
-    "ada",
-  ]
-
-  const [startDate, setStartDate] = useState(new Date());
-  const ConversationSchema = Yup.object().shape({
-    conversationLink: Yup.string()
-      .nullable(),
-    conversationTitle: Yup.string()
-      .min(2, 'Too Short!')
-      .max(120, 'Too Long!')
-      .required('Required'),
-    conversationDescription: Yup.string()
-      .min(10, '10 characters minimum')
-      .max(500, 'Too Long!')
-      .required('Required'),
-    conversationDate: Yup.date()
-      .required('Required'),
-    conversationModel: Yup.string()
-      .required('Required'),
-
-    temperature: Yup.number()
-      .typeError('Must be a number')
-      .test('is-nonNegative', 'cannot be negative', function (value) {
-        return value === undefined || value >= 0;
-      })
-      .nullable(),
-    maxTokens: Yup.number()
-      .typeError('Must be a number')
-      .integer('Must be an integer')
-      .test('is-nonNegative', 'cannot be negative', function (value) {
-        return value === undefined || value >= 0;
-      })
-      .nullable(),
-    topP: Yup.number()
-      .typeError('Must be a number')
-      .test('is-nonNegative', 'cannot be negative', function (value) {
-        return value === undefined || value >= 0;
-      })
-      .nullable(),
-    frequencyPenalty: Yup.number()
-      .typeError('Must be a number')
-      .test('is-nonNegative', 'cannot be negative', function (value) {
-        return value === undefined || value >= 0;
-      })
-      .nullable(),
-    presencePenalty: Yup.number()
-      .typeError('Must be a number')
-      .test('is-nonNegative', 'cannot be negative', function (value) {
-        return value === undefined || value >= 0;
-      })
-      .nullable(),
-
-    dumVersion: Yup.string()
-      .required('Required'),
-    isModified: Yup.bool()
-      .required('Required'),
-    terms: Yup.bool()
-      .isTrue('Please ensure there is no personally identifing information in the conversation')
-      .required('Required'),
-    systemMessage: Yup.bool()
-      .required('Required'),
-    chatPairs: Yup.array()
-      .of(
-        Yup.object().shape({
-          user: Yup.string()
-            .min(1, 'Cannot be empty')
-            .required('Required'),
-          model: Yup.string()
-            .min(1, 'Cannot be empty')
-            .required('Required'),
-        })
-      )
-      .required('Must have chat pairs')
-      .min(1, 'Minimum of one pair'),
-
-  });
 
   const warn = (errors, touched, fieldName) => {
     return (
@@ -242,38 +16,37 @@ ${chatPairsMarkdown}
     )
   }
 
+  const initialValues = {
+    formatterVersion: formatterVersion,
+    conversationTitle: '',
+    conversationDescription: '',
+    conversationDate: new Date(),
+    conversationLink: '',
+    dumVersion: dumVersions[0],
+    isModified: false,
+    conversationModel: models[0],
+    showParams: false,
+    temperature: '',
+    maxTokens: '',
+    topP: '',
+    frequencyPenalty: '',
+    presencePenalty: '',
+    systemMessage: false,
+    chatPairs: [{ user: '', model: '' }],
+  }
+
+  const handleSubmit = (values) => {
+    return downloadMarkdown(...markdownTempalte(values))
+  }
+
   return (
     <div className='container'>
-      <h1>Conversation Formatter v0.1.0</h1>
+      <h1>Conversation Formatter v`${formatterVersion}`</h1>
       <p>Welcome to the conversation formatter</p>
       <Formik
-        initialValues={{
-          formatterVersion: formatterVersion,
-          conversationTitle: '',
-          conversationDescription: '',
-          conversationDate: startDate,
-          conversationLink: '',
-          dumVersion: dumVersions[0],
-          isModified: false,
-          conversationModel: models[0],
-          showParams: false,
-          temperature: '',
-          maxTokens: '',
-          topP: '',
-          frequencyPenalty: '',
-          presencePenalty: '',
-          systemMessage: false,
-          chatPairs: [{ user: '', model: '' }],
-
-        }}
+        initialValues={initialValues}
         validationSchema={ConversationSchema}
-        onSubmit={async (values) => {
-          console.log(values)
-          console.log(...mdTempalte(values))
-          downloadMarkdown(...mdTempalte(values))
-          // await new Promise((r) => setTimeout(r, 500));
-          // alert(JSON.stringify(values, null, 2));
-        }}
+        onSubmit={handleSubmit}
       >
         {({ errors, touched, values, setFieldValue }) => (
           <Form>
@@ -298,7 +71,7 @@ ${chatPairsMarkdown}
               id='conversationDate'
               name='conversationDate'
               selected={values.conversationDate}
-              onChange={(date) => setFieldValue('conversationDate',date)}
+              onChange={(date) => setFieldValue('conversationDate', date)}
             />
             {warn(errors, touched, 'conversationDate')}
 

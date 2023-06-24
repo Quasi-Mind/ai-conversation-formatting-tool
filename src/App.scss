@@ -29,13 +29,8 @@ form {
     font-size: .75rem;
   }
 
-  &>* {
-    margin: .25rem;
-  }
-
   label {
     margin-top: 1em;
-
   }
 
   input,
@@ -75,8 +70,8 @@ form {
           .col > label {
             display: inline-flex;
             margin: .25em 1em .25em 0;
-            height: 3em;
-            width: 3em;
+            min-height: 3em;
+            min-width: 3em;
             border-radius: .5em;
             justify-content: center;
             align-items: center;
@@ -112,19 +107,27 @@ form {
     }
 
   }
+  section {
+    margin: .25rem;
+    display: flex;
+    flex-direction: column;
+  }
 
-  .params {
-
+  #parameter-fields {
     label {
-      display: block;
+      // display: block;
       margin-right: .5em;
       margin-top: .5em;
     }
     span.warn-text {
-      display: block;
+      // display: block;
       margin: .5em;
     }
+    input {
+      margin-right: auto;
+    }
     button {
+      margin-right: auto;
       margin-left: .5em;
     }
   }

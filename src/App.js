@@ -1,7 +1,7 @@
 import './App.scss'
 import React from 'react';
 import { Formik, Field, Form, FieldArray, ErrorMessage } from 'formik';
-import { formatterVersion, dumVersions, models } from './config/constants';
+import { formatterVersion, dumVersions, models } from './config/appconfig';
 import DatePicker from "react-datepicker"
 import ConversationSchema from './config/conversationSchema';
 import markdownTempalte from './utils/markdownTemplate';
@@ -41,7 +41,7 @@ const App = () => {
 
   return (
     <div className='container'>
-      <h1>Conversation Formatter v`${formatterVersion}`</h1>
+      <h1>Conversation Formatter v{formatterVersion}</h1>
       <p>Welcome to the conversation formatter</p>
       <Formik
         initialValues={initialValues}

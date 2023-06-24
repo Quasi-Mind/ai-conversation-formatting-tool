@@ -1,18 +1,20 @@
 
+const sanitizeTitle = (input) => {
+  return input.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+}
+
+function sanitizeDescription(input) {
+  // Replace markdown specific characters and line breaks
+  const step1 = input.replace(/(\||#|\*|_|-|\+|>|!|`|\n)/g, '\\$1');
+
+  // Enclose in double quotes and escape any pre-existing unescaped double quotes
+  const sanitizedInput = `"${step1.replace(/(?<!\\)"/g, '\\"')}"`;
+
+  return sanitizedInput;
+}
+
 const markdownTempalte = formData => {
-  const sanitizeTitle = (input) => {
-    return input.replace(/[^a-z0-9]/gi, '-').toLowerCase();
-  }
 
-  function sanitizeDescription(input) {
-    // Replace markdown specific characters and line breaks
-    const step1 = input.replace(/(\||#|\*|_|-|\+|>|!|`|\n)/g, '\\$1');
-
-    // Enclose in double quotes and escape any pre-existing unescaped double quotes
-    const sanitizedInput = `"${step1.replace(/(?<!\\)"/g, '\\"')}"`;
-
-    return sanitizedInput;
-  }
 
   const description = sanitizeDescription(formData.conversationDescription)
 
@@ -69,7 +71,7 @@ link: ${formData.conversationLink}
 | Modified Prompt | ${formData.isModified ? "Yes" : "No"} |
 | System Message | ${formData.systemMessage ? "Yes" : "No"} |
 | Model | ${formData.conversationModel} |
-| Link | ${formData.conversationLink || "None provided" } |
+| Link | ${formData.conversationLink || "None provided"} |
 
 </details>
 

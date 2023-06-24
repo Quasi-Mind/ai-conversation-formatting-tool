@@ -72,6 +72,28 @@ form {
       .row {
         width: 100%;
 
+          .col > label {
+            display: inline-flex;
+            margin: .25em 1em .25em 0;
+            height: 3em;
+            width: 3em;
+            border-radius: .5em;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border: 1px solid #fff;
+          }
+
+          .user > label {
+            background-color: #ddd;
+          }
+
+          .model > label {
+            background-color: #00A67E;
+            color: white;
+
+          }
+
         .col {
           display: flex;
           // align-items: center;
@@ -85,28 +107,6 @@ form {
             width: 100%;
           }
 
-          label.user,
-          label.model {
-            display: inline-flex;
-            margin: .25em 1em .25em 0;
-            height: 3em;
-            width: 3em;
-            border-radius: .5em;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            border: 1px solid #fff;
-          }
-
-          label.user {
-            background-color: #ddd;
-          }
-
-          label.model {
-            background-color: #00A67E;
-            color: white;
-
-          }
         }
       }
     }

@@ -1,6 +1,7 @@
 import './App.scss'
 import React from 'react';
-import { Formik, Field, Form, FieldArray, ErrorMessage } from 'formik';
+import { Formik, Form, FieldArray, ErrorMessage } from 'formik';
+import InputField from './components/InputField';
 import { formatterVersion, dumVersions, models } from './config/appconfig';
 import DatePicker from "react-datepicker"
 import ConversationSchema from './config/conversationSchema';
@@ -42,194 +43,116 @@ const App = () => {
         validationSchema={ConversationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched, values, setFieldValue }) => (
+        {({ values, setFieldValue }) => (
           <Form>
-            <label htmlFor="conversationLink">Link to Conversation</label>
-            <Field
-              id="conversationLink"
+            <InputField
+              label="Link to Conversation"
               name="conversationLink"
               placeholder="Conversation chat link (if one exists)"
             />
 
-            <label htmlFor="conversationTitle">Conversation Title<span className='warn-text'> *</span></label>
-            <Field
-              id="conversationTitle"
+            <InputField
+              label="Conversation Title"
               name="conversationTitle"
               placeholder="Enter a short descriptive title (max 120 characters)"
             />
-            <ErrorMessage
-              name="conversationTitle"
-              component="span"
-              className="warn-text"
-            />
 
-            <label htmlFor="conversationDescription">Conversation Description<span className='warn-text'> *</span></label>
-            <Field
-              id="conversationDescription"
+            <InputField
+              label="Conversation Description"
               name="conversationDescription"
               placeholder="Brief summary of the conversation (max 500 characters)"
             />
-            <ErrorMessage
-              name="conversationDescription"
-              component="span"
-              className="warn-text"
-            />
 
-            <label htmlFor='conversationDate'>Date of Conversation<span className='warn-text'> *</span></label>
-            < Field
+            <InputField
+              label="Date of Conversation"
+              name="conversationDate"
               component={DatePicker}
-              id='conversationDate'
-              name='conversationDate'
               selected={values.conversationDate}
               onChange={(date) => setFieldValue('conversationDate', date)}
             />
-            <ErrorMessage
-              name="conversationDate"
-              component="span"
-              className="warn-text"
-            />
 
-            <label htmlFor="dumVersion">Which DUM version did you use?<span className='warn-text'> *</span></label>
-            <Field
-              component="select"
-              id="dumVersion"
+            <InputField
+              label="DUM Version"
               name="dumVersion"
+              component="select"
             >
               {dumVersions.map((version, i) => <option key={i} value={version.toLowerCase()}>v{version}</option>)}
-            </Field>
-            <ErrorMessage
-              name="dumVersion"
-              component="span"
-              className="warn-text"
+            </InputField>
+
+            <InputField
+              label="Did you modify this version of the prompt(eg. testing, experiementing)?"
+              name="isModified"
+              type="checkbox"
             />
 
-            <label>
-              <Field type="checkbox" id="isModified" name="isModified" />
-              Did you modify this version of the prompt(eg. testing, experiementing)?
-            </label>
-
-            <label htmlFor="conversationModel">Which model did you use?<span className='warn-text'> *</span></label>
-            <Field
-              component="select"
-              id="conversationModel"
+            <InputField
+              label="Conversation Model"
               name="conversationModel"
+              component="select"
             >
               {models.map((model, i) => <option key={i} value={model.toLowerCase()}>{model}</option>)}
-            </Field>
-            <ErrorMessage
-              name="conversationModel"
-              component="span"
-              className="warn-text"
-            />
+            </InputField>
 
-            <label>
-              <Field type="checkbox" id="showParams" name="showParams" />
-              Did you modifiy the parameters(eg. temp, sampling)? <span className='hint'> * leave unchecked if unsure</span>
-            </label>
+            <InputField label="Did you modify the parameters(eg. temp, sampling)?" name="showParams" type="checkbox" />
+
 
             {values.showParams && (
               <>
                 <p>Select all that apply</p>
                 <div className="params">
-                  <label htmlFor="temperature">Temperature</label>
-                  <div>
-                    <ErrorMessage
-                      name={`temperature`}
-                      component="span"
-                      className="warn-text"
-                    />
-                    <Field
-                      type="number"
-                      id="temperature"
-                      name="temperature"
-                      step="any"
-                      min="0"
-                    />
-                    <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
-                  </div>
 
-                  <label htmlFor="maxTokens">Maximum tokens</label>
-                  <div>
-                    <ErrorMessage
-                      name={`maxTokens`}
-                      component="span"
-                      className="warn-text"
-                    />
-                    <Field
-                      type="number"
-                      id="maxTokens"
-                      name="maxTokens"
-                      min="0"
-                    />
-                    <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
-                  </div>
+                  <InputField
+                    label="Temperature"
+                    name="temperature"
+                    type="number"
+                    step="any"
+                    min="0"
+                    clear
+                  />
 
-                  <label htmlFor="topP">Top P</label>
-                  <div>
-                    <ErrorMessage
-                      name="topP"
-                      component="span"
-                      className="warn-text"
-                    />
-                    <Field
-                      type="number"
-                      id="topP"
-                      name="topP"
-                      step="any"
-                      min="0"
-                    />
-                    <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
-                  </div>
+                  <InputField
+                    label="Maimum Tokens"
+                    name="maxTokens"
+                    type="number"
+                    min="0"
+                    clear
+                  />
 
-                  <label htmlFor="frequencyPenalty">Frequency penalty</label>
-                  <div>
-                    <ErrorMessage
-                      name="frequencyPenalty"
-                      component="span"
-                      className="warn-text"
-                    />
-                    <Field
-                      type="number"
-                      id="frequencyPenalty"
-                      name="frequencyPenalty"
-                      step="any"
-                      min="0"
-                    />
-                    <button type="button" onClick={() => setFieldValue("temperature", '')}>Clear</button>
-                  </div>
+                  <InputField
+                    label="Top P"
+                    name="topP"
+                    type="number"
+                    step="any"
+                    min="0"
+                    clear
+                  />
 
-                  <label htmlFor="presencePenalty">Presence penalty</label>
-                  <div>
-                    <ErrorMessage
-                      name="presencePenalty"
-                      component="span"
-                      className="warn-text"
-                    />
-                    <Field
-                      type="number"
-                      id="presencePenalty"
-                      name="presencePenalty"
-                      step="any"
-                      min="0"
-                    />
-                    <button type="button" onClick={() => setFieldValue("temperature", null)}>Clear</button>
-                  </div>
+                  <InputField
+                    label="Frequency penalty"
+                    name="frequencyPenalty"
+                    type="number"
+                    step="any"
+                    min="0"
+                    clear
+                  />
+
+                  <InputField
+                    label="Presence penalty"
+                    name="presencePenalty"
+                    type="number"
+                    step="any"
+                    min="0"
+                    clear
+                  />
+
                 </div>
               </>
             )}
 
-            <label>
-              <Field
-                type="checkbox"
-                id="terms"
-                name="terms"
-              />
-              I have checked that there is no personally identifying information in this conversation.<span className='warn-text'> *</span>
-            </label>
-            <ErrorMessage
+            <InputField
+              label="I have checked that there is no personally identifying information in this conversation."
               name="terms"
-              component="span"
-              className="warn-text"
+              type="checkbox"
             />
             <button id="submit" type="submit">Download formatted markdown (.md) file</button>
 
@@ -237,24 +160,17 @@ const App = () => {
             <h2>Add Conversation</h2>
             <p>copy and paste your inputs and the models outputs <span className='hint'> (please also include the initial prompt and response)</span></p>
 
-            <label>
-              <Field
-                type="checkbox"
-                id="systemMessage"
-                name="systemMessage"
-              />
-              Did you use DUM as a system message? <span className='hint'> * leave unchecked if unsure</span>
-            </label>
-            <ErrorMessage
+            <InputField
+              label="Did you use DUM as a system message?"
               name="systemMessage"
-              component="span"
-              className="warn-text"
+              type="checkbox"
             />
 
             <FieldArray name="chatPairs">
               {({ insert, remove, push }) => (
                 <div className="conversation-container">
-                  {values.chatPairs.length > 0 &&
+                  {values.chatPairs.length > 0 ? (
+
                     values.chatPairs.map((chatPair, index) => (
                       <div className='conversation-pair' key={index}>
                         <button
@@ -264,36 +180,28 @@ const App = () => {
                         >
                           X
                         </button>
-                        <div className="row" key={index}>
+                        <div className="row user" key={index}>
                           <div className="col">
-                            <label className='user' htmlFor={`chatPairs.${index}.user`}>User</label>
-                            <Field
+                            <InputField
+                              label="User"
                               name={`chatPairs.${index}.user`}
                               placeholder="Enter User Message"
                               component="textarea"
                             />
-                            <ErrorMessage
-                              name={`chatPairs.${index}.user`}
-                              component="div"
-                              className="warn-text"
-                            />
                           </div>
-                          <div className="col">
-                            <label className='model' htmlFor={`chatPairs.${index}.model`}>Model</label>
-                            <Field
+                          <div className="col model">
+                            <InputField
+                              label="Model"
                               name={`chatPairs.${index}.model`}
                               placeholder="Enter Model Response"
                               component="textarea"
                             />
-                            <ErrorMessage
-                              name={`chatPairs.${index}.model`}
-                              component="div"
-                              className="warn-text"
-                            />
                           </div>
                         </div>
                       </div>
-                    ))}
+                    ))) : (
+                    <ErrorMessage name="chatPairs" component="span" className="warn-text" />
+                    )}
                   <button
                     type="button"
                     className="add-pair"

@@ -4,13 +4,14 @@ import { ErrorMessage, FastField, useFormikContext} from 'formik';
 import { FormLabel, FormErrorMessage, FormControl } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 
-const InputField = ({ label, name, clear, isInvalid, ...props }) => {
-  const { errors, touched } = useFormikContext();
+const InputField = ({ label, name, clear, isInvalid, isRequired, ...props }) => {
+  const { errors, touched  } = useFormikContext();
   return (
-    <FormControl isInvalid={Boolean(errors[name] && touched[name])}>
+    <FormControl {...{isRequired}} isInvalid={Boolean(errors[name] && touched[name])}>
       <FormLabel htmlFor={name}>{label}</FormLabel>
       <FastField
         bg="white"
+        // borderColor="gray.300"
         id={name}
         name={name}
         data-testid={name}

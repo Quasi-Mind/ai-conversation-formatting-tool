@@ -19,14 +19,19 @@ const FormatterForm = () => {
     isModified: false,
     conversationModel: models[0],
     showParams: false,
+    hasTemperature: false,
     temperature: 1,
+    hasMaxTokens: false,
     maxTokens: 256,
+    hasTopP: false,
     topP: 1,
+    hasFrequencyPenalty: false,
     frequencyPenalty: 0,
+    hasPresencePenalty: false,
     presencePenalty: 0,
     systemMessage: false,
     chatPairs: [{ user: '', model: '' }],
-    testField: ''
+    term: false
   }
 
   const handleSubmit = (values) => {

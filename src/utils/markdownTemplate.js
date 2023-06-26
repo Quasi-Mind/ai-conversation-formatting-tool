@@ -30,11 +30,11 @@ const markdownTempalte = formData => {
   const parametersTable = `
 | Parameter | Value |
 | --- | --- |
-| Max Tokens | ${formData.maxTokens} |
-| Temperature | ${formData.temperature} |
-| Top P | ${formData.topP} |
-| Frequency Penalty | ${formData.frequencyPenalty} |
-| Presence Penalty | ${formData.presencePenalty} |
+| Max Tokens | ${formData.hasMaxTokens ? formData.maxTokens : "N/A"} |
+| Temperature | ${formData.hasTemperature ? formData.temperature : "N/A"} |
+| Top P | ${formData.hasTopP ? formData.topP : "N/A"} |
+| Frequency Penalty | ${formData.hasFrequencyPenalty ? formData.frequencyPenalty : "N/A"} |
+| Presence Penalty | ${formData.hasPresencePenalty ? formData.presencePenalty : "N/A"} |
   `
   const template = `---
 formatter_version: ${formData.formatterVersion}
@@ -45,11 +45,11 @@ DUM_version: ${formData.dumVersion}
 modified_prompt: ${formData.isModified}
 model: ${formData.ConversationModel}
 parameters: 
-  max_tokens: ${formData.maxTokens ? formData.maxTokens : null}
-  temperature: ${formData.temperature ? formData.temperature : null}
-  top_p: ${formData.topP ? formData.topP : null}
-  frequency_penalty: ${formData.frequencyPenalty ? formData.frequencyPenalty : null}
-  presence_penalty: ${formData.presencePenalty ? formData.presencePenalty : null}
+  max_tokens: ${formData.hasMaxTokens ? formData.maxTokens : null}
+  temperature: ${formData.hasTemperature ? formData.temperature : null}
+  top_p: ${formData.hasTopP ? formData.topP : null}
+  frequency_penalty: ${formData.hasFrequencyPenalty ? formData.frequencyPenalty : null}
+  presence_penalty: ${formData.hasPresencePenalty ? formData.presencePenalty : null}
 link: ${formData.conversationLink}
 ---    
 

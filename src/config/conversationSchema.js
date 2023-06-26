@@ -16,12 +16,14 @@ const ConversationSchema = Yup.object().shape({
   conversationModel: Yup.string()
     .required('Required'),
 
+  hasTemperature: Yup.bool(),
   temperature: Yup.number()
     .typeError('Must be a number')
     .test('is-nonNegative', 'cannot be negative', function (value) {
       return value === undefined || value >= 0;
     })
     .nullable(),
+  hasMaxTokens: Yup.bool(),
   maxTokens: Yup.number()
     .typeError('Must be a number')
     .integer('Must be an integer')
@@ -29,18 +31,21 @@ const ConversationSchema = Yup.object().shape({
       return value === undefined || value >= 0;
     })
     .nullable(),
+  hasTopP: Yup.bool(),
   topP: Yup.number()
     .typeError('Must be a number')
     .test('is-nonNegative', 'cannot be negative', function (value) {
       return value === undefined || value >= 0;
     })
     .nullable(),
+  hasFrequencyPenalty: Yup.bool(),
   frequencyPenalty: Yup.number()
     .typeError('Must be a number')
     .test('is-nonNegative', 'cannot be negative', function (value) {
       return value === undefined || value >= 0;
     })
     .nullable(),
+  hasPresencePenalty: Yup.bool(),
   presencePenalty: Yup.number()
     .typeError('Must be a number')
     .test('is-nonNegative', 'cannot be negative', function (value) {

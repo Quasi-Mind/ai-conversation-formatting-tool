@@ -7,15 +7,17 @@ import FormatterForm from './components/FormatterForm';
 const App = () => {
   return (
     <ChakraProvider>
-        <Container maxW="container.md" >
-          <Stack spacing={3}>
+      <Container p={0} maxW="container.md" >
+        <Stack spacing={3}>
+          <Box mx={{ sm: 3, md: 0 }}>
             <Heading as="h1" size="4xl">Conversation Formatter v{formatterVersion}</Heading>
             <Text size="1xl">Welcome to the conversation formatter</Text>
-            <Box p={3} bg="gray.100" borderWidth={1} borderColor="gray.300" borderRadius={4} shadow="md">
-              <FormatterForm />
-            </Box>
-          </Stack>
-        </Container>
+          </Box>
+          <Box p={3} bg="gray.50" borderWidth={1} borderColor="gray.300" borderRadius={{ md: 4 }} shadow="md">
+            <FormatterForm />
+          </Box>
+        </Stack>
+      </Container>
     </ChakraProvider>
   )
 };

@@ -1,69 +1,79 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
-import InputField from './InputField';
+import InputField from './InputField/InputField';
+import {
+  Stack,
+  Checkbox,
+  Text,
+  Heading,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper
+} from '@chakra-ui/react';
+import ParameterField from './ParameterField';
+
 
 const ParameterFields = () => {
-  const { values } = useFormikContext();
+  const { errors, touched, values, initialValues } = useFormikContext();
 
   return (
-    <section id="parameter-fields" className="params">
-      <h2>Parameters</h2>
-      <InputField 
-        label="Did you modify the parameters(eg. temp, sampling)?" 
-        name="showParams" 
-        type="checkbox" 
+    <Stack as="section" id="parameter-fields" spacing={3} mt={5}>
+      <Heading as="h2">Parameters</Heading>
+      <InputField
+        as={Checkbox}
+        size="lg"
+        borderColor="gray.400" 
+        label="Did you modify the parameters(eg. temp, sampling)?"
+        name="showParams"
       />
 
       {values.showParams && (
-      <>
-        <p>Select all that apply</p>
+        <>
+          <Text>Select all that apply</Text>
 
-          <InputField
+          <ParameterField
             label="Temperature"
             name="temperature"
-            type="number"
-            step="any"
-            min="0"
-            clear
+            defaultValue={initialValues.temperature}
+            step={0.01}
           />
 
-          <InputField
+           <ParameterField
             label="Maimum Tokens"
             name="maxTokens"
-            type="number"
-            min="0"
-            clear
+            step={1}
+            precision={0}
+            defaultValue={initialValues.maxTokens}
           />
 
-          <InputField
+          <ParameterField
             label="Top P"
             name="topP"
-            type="number"
-            step="any"
-            min="0"
-            clear
+            step={0.01}
+            isInvalid={errors.topP && touched.topP}
+            defaultValue={initialValues.topP}
           />
 
-          <InputField
+          <ParameterField
             label="Frequency penalty"
             name="frequencyPenalty"
-            type="number"
-            step="any"
-            min="0"
-            clear
+            step={0.01}
+            isInvalid={errors.frequencyPenalty && touched.frequencyPenalty}
+            defaultValue={initialValues.frequencyPenalty}
           />
 
-          <InputField
+          <ParameterField
             label="Presence penalty"
             name="presencePenalty"
-            type="number"
-            step="any"
-            min="0"
-            clear
-          />
-      </>
+            step={0.01}
+            isInvalid={errors.presencePenalty && touched.presencePenalty}
+            defaultValue={initialValues.presencePenalty}
+          /> 
+        </>
       )}
-    </section>
+    </Stack>
   )
 }
 

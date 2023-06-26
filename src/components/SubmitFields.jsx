@@ -1,16 +1,19 @@
-import InputField from "./InputField"
+import { Stack, Heading,  Button, Checkbox } from "@chakra-ui/react"
+import InputField from "./InputField/InputField"
 
 const SubmitFields = () => {
   return (
-    <section id="submit-field">
-      <h2>Submit</h2>
+    <Stack as="section" id="submit-field" spacing={3} mt={3}>
+      <Heading as="h2">Submit</Heading>
       <InputField
+        as={Checkbox}
         label="I have checked that there is no personally identifying information in this conversation."
         name="terms"
-        type="checkbox"
+        borderColor="gray.400"
+        size="lg"
       />
-      <button id="submit" type="submit">Download formatted markdown (.md) file</button>
-    </section>
+      <Button varient="solid" colorScheme="blue" id="submit" type="submit">Download formatted markdown (.md) file</Button>
+    </Stack>
   )
 }
 

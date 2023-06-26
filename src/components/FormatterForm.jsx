@@ -8,7 +8,7 @@ import ParameterFields from './ParameterFields'
 import SubmitFields from './SubmitFields'
 import ConversationFields from './ConversationFields'
 
-export const FormatterForm = () => {
+const FormatterForm = () => {
   const initialValues = {
     formatterVersion: formatterVersion,
     conversationTitle: '',
@@ -19,13 +19,14 @@ export const FormatterForm = () => {
     isModified: false,
     conversationModel: models[0],
     showParams: false,
-    temperature: '',
-    maxTokens: '',
-    topP: '',
-    frequencyPenalty: '',
-    presencePenalty: '',
+    temperature: 1,
+    maxTokens: 256,
+    topP: 1,
+    frequencyPenalty: 0,
+    presencePenalty: 0,
     systemMessage: false,
     chatPairs: [{ user: '', model: '' }],
+    testField: ''
   }
 
   const handleSubmit = (values) => {
@@ -38,12 +39,14 @@ export const FormatterForm = () => {
       validationSchema={ConversationSchema}
       onSubmit={handleSubmit}
     >
-      <Form>
+      <Form >
         <DetailsFields />
         <ParameterFields />
-        <SubmitFields />
         <ConversationFields />
+        <SubmitFields />
       </Form>
     </Formik>
   )
 }
+
+export default FormatterForm

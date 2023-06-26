@@ -1,68 +1,92 @@
-import { ErrorMessage, FieldArray, useFormikContext } from "formik"
-import InputField from "./InputField"
+import { ErrorMessage, FastField, FieldArray, useFormikContext } from "formik"
+import InputField from "./InputField/InputField"
+import { FormControl, Stack, Textarea, Heading, Text, Button, FormErrorMessage, Box, HStack, Flex, Divider, FormLabel, Checkbox } from "@chakra-ui/react"
 
 const ConversationFields = () => {
-  const { values } = useFormikContext()
+  const { errors, touched, values } = useFormikContext()
   return (
-    <section>
-      <h2>Add Conversation</h2>
+    <Stack as="section" id="conversation-fields" spacing={3} mt={5}  >
+      <Heading as="h2">Add Conversation</Heading>
 
-      <p>copy and paste your inputs and the models outputs <span className='hint'> (please also include the initial prompt and response)</span></p>
+      <Text>copy and paste your inputs and the models outputs <span className='hint'> (please also include the initial prompt and response)</span></Text>
 
       <InputField
+        as={Checkbox}
         label="Did you use DUM as a system message?"
         name="systemMessage"
-        type="checkbox"
+        size="lg"
+        borderColor="gray.400"
       />
 
       <FieldArray name="chatPairs">
         {({ insert, remove, push }) => (
-          <div className="conversation-container">
-            {values.chatPairs.length > 0 ? (
+          <>
+            <Box className="conversation-container">
+              {values.chatPairs.length > 0 ? (
 
-              values.chatPairs.map((chatPair, index) => (
-                <div className='conversation-pair' key={index}>
-                  <button
-                    type="button"
-                    className="remove-pair"
-                    onClick={() => remove(index)}
-                  >
-                    X
-                  </button>
-                  <div className="row user" key={index}>
-                    <div className="col">
-                      <InputField
-                        label="User"
-                        name={`chatPairs.${index}.user`}
-                        placeholder="Enter User Message"
-                        component="textarea"
-                      />
-                    </div>
-                    <div className="col model">
-                      <InputField
-                        label="Model"
-                        name={`chatPairs.${index}.model`}
-                        placeholder="Enter Model Response"
-                        component="textarea"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))) : (
-              <ErrorMessage name="chatPairs" component="span" className="warn-text" />
-            )}
-            <button
-              type="button"
+                values.chatPairs.map((chatPair, index) => (
+                  <>
+                    <Stack spacing={3} className='conversation-pair' key={index}>
+                      <Stack spacing={3} w="100%" className="row user" key={index}>
+                        <FormControl
+                          isInvalid={(errors.chatPairs?.[index]?.user && touched.chatPairs?.[index]?.user)}
+                        >
+                          <HStack spacing={3}>
+                            <FormLabel mt={1} mb="auto" display="flex" justifyContent="center" alignItems="center" color="white" borderRadius={4} w="60px" h="60px" bg="gray.500" htmlFor={`chatPairs.${index}.user`}>User</FormLabel>
+                            <Box w="100%">
+                              <FastField
+                                bg="white"
+                                isInvalid={(errors.chatPairs?.[index]?.user && touched.chatPairs?.[index]?.user)}
+                                as={Textarea} label="user" name={`chatPairs.${index}.user`} placeholder="Enter user Message" />
+                              <ErrorMessage name={`chatPairs.${index}.user`} component={FormErrorMessage} />
+                            </Box>
+                          </HStack>
+                        </FormControl>
+                        <FormControl
+                          isInvalid={(errors.chatPairs?.[index]?.model && touched.chatPairs?.[index]?.model)}
+                        >
+                          <HStack spacing={3}>
+                            <FormLabel mt={1} mb="auto" display="flex" justifyContent="center" alignItems="center" color="white" borderRadius={4} w="60px" h="60px" bg="green.500" htmlFor={`chatPairs.${index}.model`}>Model</FormLabel>
+                            <Box w="100%">
+                              <FastField
+                                bg="white"
+                                isInvalid={(errors.chatPairs?.[index]?.model && touched.chatPairs?.[index]?.model)}
+                                as={Textarea} label="model" name={`chatPairs.${index}.model`} placeholder="Enter model Message" />
+                              <ErrorMessage name={`chatPairs.${index}.model`} component={FormErrorMessage} />
+                            </Box>
+                          </HStack>
+                        </FormControl>
+                      </Stack>
+                      <Button
+                        ml="auto"
+                        colorScheme="red"
+                        variant='solid'
+                        size="xs"
+                        variant='outline'
+                        className="remove-pair"
+                        onClick={() => remove(index)}
+                      >
+                        Remove Chat Pair
+                      </Button>
+                    </Stack>
+                    <Divider borderColor="gray.300" my={5} />
+                  </>
+                ))) : (
+                <ErrorMessage name="chatPairs" component={FormErrorMessage} />
+              )}
+            </Box>
+            <Button
+              mx="auto"
+              colorScheme="teal"
               className="add-pair"
               onClick={() => push({ user: '', model: '' })}
             >
               Add another message pair
-            </button>
-
-          </div>
+            </Button>
+          </>
         )}
       </FieldArray>
-    </section>
+    </Stack>
   )
 }
 

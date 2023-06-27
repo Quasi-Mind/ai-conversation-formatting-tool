@@ -29,13 +29,8 @@ form {
     font-size: .75rem;
   }
 
-  &>* {
-    margin: .25rem;
-  }
-
   label {
     margin-top: 1em;
-
   }
 
   input,
@@ -72,6 +67,28 @@ form {
       .row {
         width: 100%;
 
+          .col > label {
+            display: inline-flex;
+            margin: .25em 1em .25em 0;
+            min-height: 3em;
+            min-width: 3em;
+            border-radius: .5em;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border: 1px solid #fff;
+          }
+
+          .user > label {
+            background-color: #ddd;
+          }
+
+          .model > label {
+            background-color: #00A67E;
+            color: white;
+
+          }
+
         .col {
           display: flex;
           // align-items: center;
@@ -85,46 +102,32 @@ form {
             width: 100%;
           }
 
-          label.user,
-          label.model {
-            display: inline-flex;
-            margin: .25em 1em .25em 0;
-            height: 3em;
-            width: 3em;
-            border-radius: .5em;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            border: 1px solid #fff;
-          }
-
-          label.user {
-            background-color: #ddd;
-          }
-
-          label.model {
-            background-color: #00A67E;
-            color: white;
-
-          }
         }
       }
     }
 
   }
+  section {
+    margin: .25rem;
+    display: flex;
+    flex-direction: column;
+  }
 
-  .params {
-
+  #parameter-fields {
     label {
-      display: block;
+      // display: block;
       margin-right: .5em;
       margin-top: .5em;
     }
     span.warn-text {
-      display: block;
+      // display: block;
       margin: .5em;
     }
+    input {
+      margin-right: auto;
+    }
     button {
+      margin-right: auto;
       margin-left: .5em;
     }
   }

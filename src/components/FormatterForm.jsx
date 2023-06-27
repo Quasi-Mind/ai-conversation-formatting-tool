@@ -2,7 +2,7 @@ import { Formik, Form } from 'formik'
 import { formatterVersion, dumVersions, models } from '../config/appConfig'
 import ConversationSchema from '../config/conversationSchema'
 import downloadMarkdown from '../utils/downloadMarkdown'
-import markdownTempalte from '../utils/markdownTemplate'
+import markdownTemplate from '../utils/markdownTemplate'
 import DetailsFields from './DetailsFields'
 import ParameterFields from './ParameterFields'
 import SubmitFields from './SubmitFields'
@@ -35,7 +35,7 @@ const FormatterForm = () => {
   }
 
   const handleSubmit = (values) => {
-    return downloadMarkdown(...markdownTempalte(values))
+    return downloadMarkdown(...markdownTemplate(values))
   }
 
   return (
